@@ -1,5 +1,5 @@
 module.exports = {
-  reactStrictMode: true,
+  webpack5: false,
   env: {
     OKTA_CLIENTID: process.env.OKTA_CLIENTID,
     OKTA_CLIENTSECRET: process.env.OKTA_CLIENTSECRET,
