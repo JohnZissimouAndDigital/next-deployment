@@ -1,6 +1,7 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
+import { getSession } from "next-auth/client";
 
 export default function Home() {
   return (
@@ -67,3 +68,20 @@ export default function Home() {
     </div>
   )
 }
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+  
+    const { res } = context;
+  
+    if (!session) {
+      //redirect to home page when the user is not logged in
+      res.setHeader("location", "/");
+      res.statusCode = 302;
+      res.end();
+    }
+  
+    // call Contentful and get data then return as props to the page
+  
+    return { props: {} };
+  }
