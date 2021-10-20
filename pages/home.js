@@ -2,8 +2,10 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import { getSession } from "next-auth/client";
+import { createClient } from "contentful";
 
-export default function Home() {
+export default function Home({ content }) {
+    console.log(content);
   return (
     <div className={styles.container}>
       <Head>
@@ -82,6 +84,15 @@ export async function getServerSideProps(context) {
     }
   
     // call Contentful and get data then return as props to the page
+    const client = createClient({
+        space: process.env.CONTENTFUL_SPACE_ID,
+        accessToken: process.env.CONTENTFUL_ACCESS_KEY
+    })
+
+    const response = await client.getEntries({ content_type: 'topic' })
+
   
-    return { props: {} };
+    return { props: {
+        content: response.items
+    } };
   }
